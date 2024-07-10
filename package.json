@@ -5,6 +5,9 @@
   "repository": "https://github.com/ZachTaylor2002/Authentication-API.git",
   "author": "Zach Taylor <124469454+ZachTaylor2002@users.noreply.github.com>",
   "license": "MIT",
+  "scripts":{
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+  },
   "devDependencies": {
     "@types/config": "^3.3.4",
     "@types/express": "^4.17.21",
