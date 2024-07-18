@@ -1,23 +1,23 @@
-// Loading enviorment variables from a .env file into process.env
-require('dotenv').config
+import express from 'express';
+import config from 'config';
+import connectToDb from './utils/connectToDb';
+import router from './routes';
+import dotenv from 'dotenv';
 
-//Importing the Express framework for building wen applications
-import express from 'express'
+// Load environment variables from a .env file into process.env
+dotenv.config();
 
-//Importing the config module to manage application configurations
-import config from 'config'
-import connectToDb from './utils/connectToDb'
+// Create an instance of an Express application 
+const app = express();
 
-// Created an instance of an Express application 
-const app = express()
+// Use the router
+app.use(router);
 
-//Retrieved the port number from the configuration settings
-const port = config.get('port')
+// Retrieve the port number from the configuration settings
+const port = config.get('port') || 3000;
 
-// Here I started the express server and listen on the specified port
+// Start the Express server and listen on the specified port
 app.listen(port, () => {
-    //printing out a message to the terminal showing that the server does indeed work
-    console.log(`App started at https://localhost:${port}`);
-
+    console.log(`App started at http://localhost:${port}`);
     connectToDb();
 });
