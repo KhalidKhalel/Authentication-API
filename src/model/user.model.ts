@@ -1,5 +1,11 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 import { nanoid } from "nanoid";
+
+@modelOptions({
+    schemaOptions:{
+        timestamps: true
+    }
+})
 
 
 export class User{
