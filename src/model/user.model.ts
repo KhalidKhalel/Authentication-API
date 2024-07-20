@@ -1,9 +1,24 @@
-import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, prop, Severity, pre } from "@typegoose/typegoose";
 import { nanoid } from "nanoid";
+import argon2 from 'argon2'
+
+@pre<User>("save", async function() {
+    if(!this.isModified('password')){
+        return; 
+    }
+
+    const hash = await argon2.hash(this.password)
+
+    this.password = hash
+})
+
 
 @modelOptions({
     schemaOptions:{
         timestamps: true
+    },
+    options:{
+        allowMixed: Severity.ALLOW,
     }
 })
 
@@ -25,7 +40,7 @@ export class User{
     verificationCode: string;
 
     @prop({})
-    passwordResetCode: string;
+    passwordResetCode: string | null;
 
     @prop({default: false})
     verified: boolean;
