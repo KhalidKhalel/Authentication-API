@@ -1,64 +1,65 @@
 import { getModelForClass, modelOptions, prop, Severity, pre, DocumentType } from "@typegoose/typegoose";
-import { nanoid } from "nanoid";
-import argon2 from 'argon2'
+import argon2 from 'argon2';
 import log from "../utils/logger";
 
+// Function to get nanoid dynamically
+async function getNanoid() {
+  const { nanoid } = await import('nanoid');
+  return nanoid;
+}
+
 @pre<User>("save", async function() {
-    if(!this.isModified('password')){
+    if (!this.isModified('password')) {
         return; 
     }
 
-    const hash = await argon2.hash(this.password)
-
-    this.password = hash
-
-    return;
+    const hash = await argon2.hash(this.password);
+    this.password = hash;
 })
 
-
 @modelOptions({
-    schemaOptions:{
+    schemaOptions: {
         timestamps: true
     },
-    options:{
+    options: {
         allowMixed: Severity.ALLOW,
     }
 })
-
-
-export class User{
-    @prop({lowercase:true, required: true,  unique: true})
+export class User {
+    @prop({ lowercase: true, required: true, unique: true })
     email: string;
 
-    @prop({required: true})
+    @prop({ required: true })
     firstName: string;
 
-    @prop({required: true})
+    @prop({ required: true })
     lastName: string;
 
-    @prop({required: true})
+    @prop({ required: true })
     password: string;
 
-    @prop({required: true, default: () => nanoid() })
+    @prop({ required: true, default: async () => {
+        const nanoid = await getNanoid();
+        return nanoid();
+    }})
     verificationCode: string;
 
     @prop({})
     passwordResetCode: string | null;
 
-    @prop({default: false})
+    @prop({ default: false })
     verified: boolean;
 
-    async validatePassword(this: DocumentType<User>, candidatePassword: string){
-        try{
-            return await argon2.verify(this.password, candidatePassword)
-        }catch(e){
-            log.error(e,"Could not validate password")
-            return false
+    async validatePassword(this: DocumentType<User>, candidatePassword: string) {
+        try {
+            return await argon2.verify(this.password, candidatePassword);
+        } catch (e) {
+            log.error(e, "Could not validate password");
+            return false;
         }
     }
-
 }
 
-const UserModel = getModelForClass(User)
+const UserModel = getModelForClass(User);
 
-export default UserModel
+export default UserModel;
