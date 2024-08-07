@@ -10,6 +10,8 @@ dotenv.config();
 // Create an instance of an Express application 
 const app = express();
 
+app.use(express.json());
+
 // Use the router
 app.use(router);
 
