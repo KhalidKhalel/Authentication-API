@@ -52,3 +52,5 @@ export async function verifyUserHandler(req: Request<VerifyUserInput>, res: Resp
 
     return res.send("Could not verify user")
 }
+
+export async function forgotPasswordHandler(req: Request,res: Response ){}
