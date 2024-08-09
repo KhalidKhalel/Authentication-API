@@ -1,8 +1,8 @@
-import { getModelForClass, modelOptions, prop, Severity, pre, DocumentType } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, prop, Severity, pre,index, DocumentType } from "@typegoose/typegoose";
 import argon2 from 'argon2';
 import log from "../utils/logger";
 
-// Function to get nanoid dynamically
+
 async function getNanoid() {
   const { nanoid } = await import('nanoid');
   return nanoid;
@@ -17,6 +17,7 @@ async function getNanoid() {
     this.password = hash;
 })
 
+@index({email: 1})
 @modelOptions({
     schemaOptions: {
         timestamps: true
