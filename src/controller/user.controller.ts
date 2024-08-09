@@ -84,3 +84,5 @@ export async function forgotPasswordHandler(req: Request<{}, {}, ForgotPasswordI
     log.debug(`Password reset email sent to ${email}`);
     return res.send(message);
 }
+
+export async function resetPasswordHandler() {}
