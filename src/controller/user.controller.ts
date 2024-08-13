@@ -1,5 +1,5 @@
 import {Request, Response} from "express"
-import { CreateUserInput, ForgotPasswordInput, VerifyUserInput } from "../schema/user.schema"
+import { CreateUserInput, ForgotPasswordInput, ResetPasswordInput, VerifyUserInput } from "../schema/user.schema"
 import { createUser, findUserById, findUserByEmail } from "../service/user.service";
 import sendEmail from "../utils/mailer";
 import log from "../utils/logger";
@@ -85,4 +85,29 @@ export async function forgotPasswordHandler(req: Request<{}, {}, ForgotPasswordI
     return res.send(message);
 }
 
-export async function resetPasswordHandler() {}
+export async function resetPasswordHandler(req: Request<ResetPasswordInput["params"], {}, ResetPasswordInput["body"]>,
+    res: Response) {
+
+    const {id, passwordResetCode} = req.params
+
+    const { password } = req.body;
+
+    const user = await findUserById(id);
+
+    //Checking to see three things here:
+    //1.) Check to see if the user is actually registered
+    //2.) Make sure the user has a reset password code
+    //3.) Password reset code given doesn't match what the user gave
+    if(!user || !user.passwordResetCode || user.passwordResetCode !== passwordResetCode ){
+        return res.status(400).send("Could not reset user password");
+    }
+
+    //setting this to null so that they can't reuse the same password reset code again for future attemps
+    user.passwordResetCode = null;
+    
+    user.password = password;
+
+    await user.save();
+
+    return res.send("Successfully updated password");
+}
