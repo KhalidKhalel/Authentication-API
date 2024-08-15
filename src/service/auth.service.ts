@@ -7,6 +7,24 @@ export async function createSession({ userId }: { userId: string }) {
     return SessionModel.create({ user: userId });
 }
 
+export async function signRefreshToken({ userId }: { userId: string }){
+    const session = await createSession({
+        userId,
+      });
+    
+      const refreshToken = signJwt(
+        {
+          session: session._id,
+        },
+        "refreshTokenPrivateKey",
+        {
+          expiresIn: "1y",
+        }
+      );
+    
+      return refreshToken;
+}
+
 export function signAccessToken(user: DocumentType<User>){
     const payload = user.toJSON()
 
