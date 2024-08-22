@@ -8,6 +8,10 @@ export async function createSession({ userId }: { userId: string }) {
     return SessionModel.create({ user: userId });
 }
 
+export async function findSessionById(id: string) {
+  return SessionModel.findById(id);
+}
+
 export async function signRefreshToken({ userId }: { userId: string }){
     const session = await createSession({
         userId,
