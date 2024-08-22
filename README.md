@@ -41,3 +41,14 @@ To follow along with this project, you will need:
 
    ```bash
    git clone https://github.com/yourusername/authentication-api.git
+
+2. **Install Dependencies**
+   Navigate to the project directory and install the required packages:
+   `cd authentication-api`
+   `npm install`
+
+3. **Set Up Environment Variables**
+Create a `.env` file in the root directory and add the necessary configuration variables:
+
+4. **Start the server and Test the API**
+   Use Postman or any API client to test the endpoints listed in the Features section.
