@@ -3,6 +3,7 @@ import config from 'config';
 import connectToDb from './utils/connectToDb';
 import router from './routes';
 import dotenv from 'dotenv';
+import deserializeUser from './middleware/deserializeUser';
 
 // Load environment variables from a .env file into process.env
 dotenv.config();
@@ -11,6 +12,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(deserializeUser)
 
 // Use the router
 app.use(router);
