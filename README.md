@@ -7,6 +7,8 @@ Welcome to the Authentication API project, built with cutting-edge technologies 
 ## Features
 
 - **User Registration**: Create new user accounts with email verification.
+  ![image](https://github.com/user-attachments/assets/d6751b8e-47db-4ca2-bf80-b3a1cd93ec90)
+  
 - **Email Verification**: Verify user email addresses to ensure account authenticity.
 - **Forgot Password**: Send password reset emails to users.
 - **Reset Password**: Securely update passwords for users.
