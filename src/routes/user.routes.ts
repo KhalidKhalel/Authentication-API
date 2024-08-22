@@ -4,6 +4,7 @@ import { createUserSchema, verifyUserSchema, forgotPasswordSchema, resetPassword
 import { createUserHandler, resetPasswordHandler } from '../controller/user.controller';
 import { forgotPasswordHandler } from '../controller/user.controller';
 import { getCurrentUserHandler } from '../controller/user.controller';
+import requireUser from '../middleware/requireUser';
 
 const router = express.Router()
 
@@ -23,6 +24,6 @@ router.post("/api/users/resetpassword/:id/passwordResetCode", validateResource(r
 resetPasswordHandler
 );
 
-router.get("/api/users/me", getCurrentUserHandler);
+router.get("/api/users/me", requireUser, getCurrentUserHandler);
 
 export default router
