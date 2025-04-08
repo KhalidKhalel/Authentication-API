@@ -1,5 +1,5 @@
 # Authentication API
-`Programmer:` Khalid Khalel (Computer Science Student at Middle Tennessee State University)
+`Programmer:` Khalid Khalel (Computer Science/Cybersecurity Student at Middle Tennessee State University) 
 ## Overview
 
 Welcome to the Authentication API project, built with cutting-edge technologies to provide a secure and efficient user authentication system. This API is designed to handle user registration, login, email verification, password management, and token management. It leverages modern tools and libraries to ensure a robust and scalable solution.
